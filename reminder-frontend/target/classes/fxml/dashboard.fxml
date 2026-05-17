@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.reminder.frontend.controller.DashboardController"
+            style="-fx-font-family: 'Segoe UI'; -fx-font-size: 12;">
+    
+    <!-- Top Header -->
+    <top>
+        <VBox style="-fx-background-color: #2C3E50; -fx-padding: 20; -fx-alignment: center;">
+            <Label text="My Reminder Dashboard" 
+                   style="-fx-text-fill: white; -fx-font-size: 28; -fx-font-weight: bold;"/>
+        </VBox>
+    </top>
+    
+    <!-- Center: TableView -->
+    <center>
+        <VBox style="-fx-padding: 20; -fx-spacing: 10;">
+            <Label text="Active Reminders" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+            <TableView fx:id="reminderTable" style="-fx-font-size: 12;">
+                <columns>
+                    <TableColumn text="ID" prefWidth="40">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="id"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Title" prefWidth="200">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="title"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Description" prefWidth="250">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="description"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Due Date" prefWidth="180">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="dueDate"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Status" prefWidth="100">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="completed"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+    
+    <!-- Bottom: Add Reminder Panel -->
+    <bottom>
+        <VBox style="-fx-background-color: #ECF0F1; -fx-padding: 20; -fx-spacing: 10; -fx-border-color: #BDC3C7; -fx-border-width: 1 0 0 0;">
+            <Label text="Add New Reminder" style="-fx-font-size: 14; -fx-font-weight: bold;"/>
+            <HBox spacing="10">
+                <TextField fx:id="titleInput" promptText="Title" prefWidth="200"/>
+                <TextField fx:id="descriptionInput" promptText="Description" prefWidth="250"/>
+                <DatePicker fx:id="datePicker" prefWidth="120"/>
+                <Spinner fx:id="hourSpinner" prefWidth="70" style="-fx-pref-width: 70;"/>
+                <Spinner fx:id="minuteSpinner" prefWidth="70" style="-fx-pref-width: 70;"/>
+                <Button text="Add Reminder" fx:id="addButton" 
+                        style="-fx-padding: 8; -fx-font-size: 12; -fx-cursor: hand;"/>
+            </HBox>
+        </VBox>
+    </bottom>
+</BorderPane>
