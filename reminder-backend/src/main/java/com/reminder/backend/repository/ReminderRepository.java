@@ -12,4 +12,6 @@ public interface ReminderRepository extends JpaRepository<Reminder, Long> {
     List<Reminder> findByCompleted(boolean completed);
     List<Reminder> findByDueDateBetween(LocalDateTime start, LocalDateTime end);
     List<Reminder> findAllByOrderByDueDateAsc();
+    List<Reminder> findByUserIdOrderByDueDateAsc(Long userId);
+    List<Reminder> findByUserIdAndCompleted(Long userId, boolean completed);
 }

@@ -14,10 +14,12 @@ import java.util.concurrent.TimeUnit;
 public class ReminderScheduler {
     private ScheduledExecutorService scheduler;
     private ReminderClient reminderClient;
+    private Long userId;
     private static final long CHECK_INTERVAL_SECONDS = 30;
     
-    public ReminderScheduler(ReminderClient reminderClient) {
+    public ReminderScheduler(ReminderClient reminderClient, Long userId) {
         this.reminderClient = reminderClient;
+        this.userId = userId;
         this.scheduler = new ScheduledThreadPoolExecutor(1);
     }
     
@@ -31,7 +33,7 @@ public class ReminderScheduler {
     
     private void checkReminders() {
         try {
-            List<Reminder> reminders = reminderClient.fetchReminders();
+            List<Reminder> reminders = reminderClient.fetchReminders(userId);
             LocalDateTime now = LocalDateTime.now();
             
             for (Reminder reminder : reminders) {

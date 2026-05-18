@@ -1,7 +1,9 @@
 package com.reminder.backend.controller;
 
 import com.reminder.backend.model.Reminder;
+import com.reminder.backend.model.User;
 import com.reminder.backend.repository.ReminderRepository;
+import com.reminder.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +19,14 @@ public class ReminderController {
     @Autowired
     private ReminderRepository reminderRepository;
     
+    @Autowired
+    private UserRepository userRepository;
+    
     @GetMapping
-    public List<Reminder> getAllReminders() {
+    public List<Reminder> getAllReminders(@RequestParam(value = "userId", required = false) Long userId) {
+        if (userId != null) {
+            return reminderRepository.findByUserIdOrderByDueDateAsc(userId);
+        }
         return reminderRepository.findAllByOrderByDueDateAsc();
     }
     
@@ -29,13 +37,25 @@ public class ReminderController {
     }
     
     @GetMapping("/active")
-    public List<Reminder> getActiveReminders() {
+    public List<Reminder> getActiveReminders(@RequestParam(value = "userId", required = false) Long userId) {
+        if (userId != null) {
+            return reminderRepository.findByUserIdAndCompleted(userId, false);
+        }
         return reminderRepository.findByCompleted(false);
     }
     
     @PostMapping
-    public Reminder createReminder(@RequestBody Reminder reminder) {
-        return reminderRepository.save(reminder);
+    public ResponseEntity<Reminder> createReminder(@RequestBody Reminder reminder, @RequestParam(value = "userId", required = false) Long userId) {
+        if (userId != null) {
+            Optional<User> user = userRepository.findById(userId);
+            if (user.isPresent()) {
+                reminder.setUser(user.get());
+                return ResponseEntity.ok(reminderRepository.save(reminder));
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        }
+        return ResponseEntity.badRequest().build();
     }
     
     @PutMapping("/{id}")

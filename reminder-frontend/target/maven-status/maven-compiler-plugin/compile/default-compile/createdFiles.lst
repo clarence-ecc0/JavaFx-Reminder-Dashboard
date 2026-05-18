@@ -4,9 +4,16 @@ com\reminder\frontend\controller\DashboardController$4.class
 com\reminder\frontend\model\Reminder.class
 com\reminder\frontend\util\LocalDateTimeAdapter.class
 com\reminder\frontend\controller\DashboardController$3.class
+com\reminder\frontend\model\User.class
+com\reminder\frontend\controller\LoginController$1.class
+com\reminder\frontend\util\DatabaseConnection.class
 com\reminder\frontend\controller\DashboardController.class
+DashboardController2.class
 com\reminder\frontend\controller\DashboardController$5.class
+com\reminder\frontend\controller\LoginController$2.class
 com\reminder\frontend\client\ReminderClient.class
 com\reminder\frontend\controller\DashboardController$1.class
 com\reminder\frontend\scheduler\ReminderScheduler.class
+com\reminder\frontend\util\UserDAO.class
 com\reminder\frontend\controller\DashboardController$2.class
+com\reminder\frontend\controller\LoginController.class

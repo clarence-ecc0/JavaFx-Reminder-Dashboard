@@ -1,6 +1,11 @@
 C:\Users\omehc\Documents\c0d3$\Java\GUI\reminder-frontend\src\main\java\com\reminder\frontend\model\Reminder.java
+C:\Users\omehc\Documents\c0d3$\Java\GUI\reminder-frontend\src\main\java\com\reminder\frontend\controller\DashboardController2.java
+C:\Users\omehc\Documents\c0d3$\Java\GUI\reminder-frontend\src\main\java\com\reminder\frontend\model\User.java
+C:\Users\omehc\Documents\c0d3$\Java\GUI\reminder-frontend\src\main\java\com\reminder\frontend\util\DatabaseConnection.java
+C:\Users\omehc\Documents\c0d3$\Java\GUI\reminder-frontend\src\main\java\com\reminder\frontend\controller\LoginController.java
 C:\Users\omehc\Documents\c0d3$\Java\GUI\reminder-frontend\src\main\java\com\reminder\frontend\scheduler\ReminderScheduler.java
 C:\Users\omehc\Documents\c0d3$\Java\GUI\reminder-frontend\src\main\java\com\reminder\frontend\util\LocalDateTimeAdapter.java
 C:\Users\omehc\Documents\c0d3$\Java\GUI\reminder-frontend\src\main\java\com\reminder\frontend\controller\DashboardController.java
+C:\Users\omehc\Documents\c0d3$\Java\GUI\reminder-frontend\src\main\java\com\reminder\frontend\util\UserDAO.java
 C:\Users\omehc\Documents\c0d3$\Java\GUI\reminder-frontend\src\main\java\com\reminder\frontend\Main.java
 C:\Users\omehc\Documents\c0d3$\Java\GUI\reminder-frontend\src\main\java\com\reminder\frontend\client\ReminderClient.java

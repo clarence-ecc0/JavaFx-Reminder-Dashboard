@@ -2,12 +2,19 @@ package com.reminder.frontend.controller;
 
 import com.reminder.frontend.client.ReminderClient;
 import com.reminder.frontend.model.Reminder;
+import com.reminder.frontend.model.User;
+import com.reminder.frontend.scheduler.ReminderScheduler;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,8 +29,23 @@ public class DashboardController {
     @FXML private Spinner<Integer> hourSpinner;
     @FXML private Spinner<Integer> minuteSpinner;
     @FXML private Button addButton;
+    @FXML private Button logoutButton;
+    @FXML private Label userGreetingLabel;
     
     private ReminderClient reminderClient;
+    private ReminderScheduler scheduler;
+    private User currentUser;
+    
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
+        if (userGreetingLabel != null) {
+            userGreetingLabel.setText("Welcome, " + user.getFullName() + "!");
+        }
+        
+        loadReminders();
+        scheduler = new ReminderScheduler(reminderClient, currentUser.getId());
+        scheduler.start();
+    }
     
     @FXML
     public void initialize() {
@@ -31,8 +53,8 @@ public class DashboardController {
         
         setupTimeSpinners();
         addButton.setOnAction(event -> handleAddReminder());
+        logoutButton.setOnAction(event -> handleLogout());
         setupActionsColumn();
-        loadReminders();
     }
     
     private void setupTimeSpinners() {
@@ -82,7 +104,7 @@ public class DashboardController {
         Task<List<Reminder>> task = new Task<List<Reminder>>() {
             @Override
             protected List<Reminder> call() throws Exception {
-                return reminderClient.fetchReminders();
+                return reminderClient.fetchReminders(currentUser.getId());
             }
         };
         
@@ -133,7 +155,7 @@ public class DashboardController {
         Task<Reminder> task = new Task<Reminder>() {
             @Override
             protected Reminder call() throws Exception {
-                return reminderClient.createReminder(reminder);
+                return reminderClient.createReminder(reminder, currentUser.getId());
             }
         };
         
@@ -169,7 +191,7 @@ public class DashboardController {
         Task<Reminder> task = new Task<Reminder>() {
             @Override
             protected Reminder call() throws Exception {
-                return reminderClient.updateReminder(reminder.getId(), reminder);
+                return reminderClient.updateReminder(reminder.getId(), reminder, currentUser.getId());
             }
         };
         
@@ -220,6 +242,28 @@ public class DashboardController {
             Thread thread = new Thread(task);
             thread.setDaemon(true);
             thread.start();
+        }
+    }
+    
+    private void handleLogout() {
+        if (scheduler != null) {
+            scheduler.stop();
+        }
+        
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
+            javafx.scene.layout.BorderPane root = loader.load();
+            
+            Stage window = (Stage) logoutButton.getScene().getWindow();
+            Scene scene = new Scene(root, 800, 600);
+            window.setTitle("Reminder Dashboard - Login");
+            window.setScene(scene);
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Logout Failed");
+            alert.setContentText("Could not return to login page: " + e.getMessage());
+            alert.showAndWait();
         }
     }
 }

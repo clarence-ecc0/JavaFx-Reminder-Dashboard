@@ -20,9 +20,10 @@ public class ReminderClient {
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
             .create();
     
-    public List<Reminder> fetchReminders() throws Exception {
+    public List<Reminder> fetchReminders(Long userId) throws Exception {
+        String url = BASE_URL + "?userId=" + userId;
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL))
+                .uri(URI.create(url))
                 .GET()
                 .build();
         
@@ -30,10 +31,11 @@ public class ReminderClient {
         return gson.fromJson(response.body(), new TypeToken<List<Reminder>>(){}.getType());
     }
     
-    public Reminder createReminder(Reminder reminder) throws Exception {
+    public Reminder createReminder(Reminder reminder, Long userId) throws Exception {
         String json = gson.toJson(reminder);
+        String url = BASE_URL + "?userId=" + userId;
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL))
+                .uri(URI.create(url))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
@@ -42,7 +44,7 @@ public class ReminderClient {
         return gson.fromJson(response.body(), Reminder.class);
     }
     
-    public Reminder updateReminder(Long id, Reminder reminder) throws Exception {
+    public Reminder updateReminder(Long id, Reminder reminder, Long userId) throws Exception {
         String json = gson.toJson(reminder);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/" + id))

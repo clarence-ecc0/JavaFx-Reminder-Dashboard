@@ -11,6 +11,10 @@ public class Reminder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+    
     @Column(nullable = false)
     private String title;
     
@@ -43,6 +47,14 @@ public class Reminder {
     
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public User getUser() {
+        return user;
+    }
+    
+    public void setUser(User user) {
+        this.user = user;
     }
     
     public String getTitle() {

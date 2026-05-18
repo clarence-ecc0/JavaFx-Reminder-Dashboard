@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class Reminder {
     private Long id;
+    private Long userId;
     private String title;
     private String description;
     private LocalDateTime dueDate;
@@ -26,6 +27,14 @@ public class Reminder {
     
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public Long getUserId() {
+        return userId;
+    }
+    
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
     
     public String getTitle() {
@@ -80,6 +89,7 @@ public class Reminder {
     public String toString() {
         return "Reminder{" +
                 "id=" + id +
+                ", userId=" + userId +
                 ", title='" + title + '\'' +
                 ", dueDate=" + dueDate +
                 ", completed=" + completed +
