@@ -23,14 +23,14 @@ mysql -u root < init_users_table.sql
 
 # Terminal 2: Start Backend
 cd reminder-backend
-mvnw.cmd spring-boot:run
+.\mvnw.cmd spring-boot:run -DskipTests  
 
 # Terminal 3: Build Frontend
 cd reminder-frontend
-mvnw.cmd clean install
+.\mvnw.cmd clean install -DskipTests
 
 # Terminal 3: Run Frontend
-mvnw.cmd javafx:run
+.\mvnw.cmd javafx:run
 ```
 
 **Login with:** `testuser` / `password123`
